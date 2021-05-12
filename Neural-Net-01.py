@@ -3,6 +3,7 @@ import tensorflow as tf
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 mnist = tf.keras.datasets.mnist
 
@@ -53,3 +54,11 @@ def plot_history(history):
   
  
 plot_history(history=history)
+
+def predict(model, test_data):
+  i = random.randint(0, 10000)
+  predictions = model.predict(test_data[i])
+  plt.imshow(predictions)
+  plt.title(test_labels[i])
+
+predict(model=model, test_data=test_data)
