@@ -41,10 +41,6 @@ def preprocess(train_data, test_data):
 # Perform the preprocessing on the training and testing data
 preprocess(train_data=train_data, test_data=test_data)
 
-# Add a dimenstion to the tensor to represent the color channels
-train_data = tf.expand_dims(train_data_norm, -1)
-test_data = tf.expand_dims(test_data_norm, -1)
-
 # Function to plot example images in the range 0-1000 at random
 def plot_raw_images(data):
   i = random.randint(0,1000)
