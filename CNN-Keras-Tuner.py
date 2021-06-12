@@ -30,6 +30,15 @@ preprocess(train_data=train_data, test_data=test_data)
 print(train_data.shape)
 print(test_data.shape)
 
+# Create a callback function to stop training at 97% accuracy
+class MyCallback(tf.keras.callbacks.Callback):
+  def on_epoch_end(self, epoch, logs={}):
+    if logs.get('accuracy') > 0.97:
+      print('97% accuracy reached, training stopped.')
+      self.model.stop_training = True
+      
+callback = MyCallback()
+
 def create_model(hp):
 
   model = tf.keras.Sequential()
@@ -50,7 +59,8 @@ def create_model(hp):
   model.compile(loss='sparse_categorical_crossentropy',
                 optimizer=tf.keras.optimizers.Adam(hp.Choice('learning rate',
                                                    values=[1e-1, 1e-2, 1e-3, 1e-4])),
-                metrics=['accuracy'])
+                metrics=['accuracy'],
+               callbacks=[callback])
   return model
 
 
